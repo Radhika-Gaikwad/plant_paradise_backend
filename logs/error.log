@@ -1,0 +1,8 @@
+2025-08-13 22:46:01 [[31merror[39m]: u is not defined 
+2025-08-13 22:50:44 [[31merror[39m]: u is not defined 
+2025-08-13 22:54:48 [[31merror[39m]: u is not defined 
+2025-08-13 23:23:48 [[31merror[39m]: bcrypt is not defined 
+2025-08-15 13:00:01 [[31merror[39m]: hashedPassword is not defined 
+2025-08-15 20:24:56 [[31merror[39m]: Expected double-quoted property name in JSON at position 340 {"expose":true,"statusCode":400,"status":400,"body":"{\r\n  \"productName\": \"Peace Lily\",\r\n  \"category\": \"Indoor\",\r\n  \"subCategory\": \"Flowering\",\r\n  \"quantity\": 25,\r\n  \"stock\": true,\r\n  \"subscription\": true,\r\n  \"review\": [],\r\n  \"unit\": \"piece\",\r\n  \"price\": 799,\r\n  \"discount\": 5,\r\n  \"imageUrl\": [\"https://example.com/peace-lily.jpg\"],\r\n  \"video\": [],\r\n  \"description\": \"Low light indoor plant\",\r\n}\r\n","type":"entity.parse.failed"}
+2025-08-19 20:40:34 [[31merror[39m]: secretOrPrivateKey must have a value 
+2025-08-19 20:46:55 [[31merror[39m]: secretOrPrivateKey must have a value 
