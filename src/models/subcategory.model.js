@@ -22,6 +22,11 @@ const subCategorySchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    imageUrl: {
+      type: String, // Single image for subcategory
+      trim: true,
+      default: ''
+    },
     isActive: {
       type: Boolean,
       default: true,
