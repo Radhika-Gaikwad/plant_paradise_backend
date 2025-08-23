@@ -29,11 +29,18 @@ export default class UserLoginService {
           role: "Admin"
         });
 
-        return sendResponse(CODES.OK, 'Admin logged in successfully', {
+        return sendResponse(CODES.OK, 'User logged in successfully', {
           token,
-          name: "Admin",
-          role: 1 // Admin = 1
+          user: {
+            userId: user._id,
+            name: user.name,
+            email: user.email,
+            mobile: user.mobile,
+            gender: user.gender,
+            role: user.role === 'User' ? 0 : 1
+          }
         });
+
       }
 
       // 🔹 Normal user login
@@ -58,8 +65,14 @@ export default class UserLoginService {
 
       return sendResponse(CODES.OK, 'User logged in successfully', {
         token,
-        name: user.name,
-        role: user.role === 'User' ? 0 : 1
+        user: {
+          userId: user._id,
+          name: user.name,
+          email: user.email,
+          mobile: user.mobile,
+          gender: user.gender,
+          role: user.role === 'User' ? 0 : 1
+        }
       });
     } catch (error) {
       logger.error(error);
