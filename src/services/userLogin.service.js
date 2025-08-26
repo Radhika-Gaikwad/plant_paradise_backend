@@ -18,6 +18,7 @@ export default class UserLoginService {
       const normalizedEmail = email.trim().toLowerCase();
 
       // 🔹 Check if it's the admin account
+      // 🔹 Admin login case
       if (normalizedEmail === ADMIN_CREDENTIALS.email.toLowerCase()) {
         if (password !== ADMIN_CREDENTIALS.password) {
           return sendResponse(CODES.UNAUTHORIZED, 'Invalid admin password');
@@ -29,19 +30,19 @@ export default class UserLoginService {
           role: "Admin"
         });
 
-        return sendResponse(CODES.OK, 'User logged in successfully', {
+        return sendResponse(CODES.OK, 'Admin logged in successfully', {
           token,
           user: {
-            userId: user._id,
-            name: user.name,
-            email: user.email,
-            mobile: user.mobile,
-            gender: user.gender,
-            role: user.role === 'User' ? 0 : 1
+            userId: "admin",   // or some unique identifier
+            name: "Admin",
+            email: ADMIN_CREDENTIALS.email,
+            mobile: null,
+            gender: null,
+            role: 1   // since Admin
           }
         });
-
       }
+
 
       // 🔹 Normal user login
       const user = await this.#userConnection.findOne({ email: normalizedEmail });

@@ -137,3 +137,22 @@
 2025-08-23 16:28:20 [[32minfo[39m]: MongoDB connected 
 2025-08-23 16:28:20 [[32minfo[39m]: Server listening on port 5000 
 2025-08-23 16:28:35 [[32minfo[39m]: Shutting down... 
+2025-08-26 10:07:26 [[32minfo[39m]: MongoDB connected 
+2025-08-26 10:07:26 [[32minfo[39m]: Server listening on port 5000 
+2025-08-26 10:09:33 [[31merror[39m]: Cannot access 'user' before initialization 
+2025-08-26 10:12:20 [[32minfo[39m]: Shutting down... 
+2025-08-26 10:12:23 [[32minfo[39m]: MongoDB connected 
+2025-08-26 10:12:23 [[32minfo[39m]: Server listening on port 5000 
+2025-08-26 10:12:44 [[32minfo[39m]: Shutting down... 
+2025-08-26 10:12:47 [[32minfo[39m]: MongoDB connected 
+2025-08-26 10:12:47 [[32minfo[39m]: Server listening on port 5000 
+2025-08-26 10:12:53 [[31merror[39m]: Cannot access 'user' before initialization 
+2025-08-26 10:16:30 [[32minfo[39m]: Shutting down... 
+2025-08-26 10:16:34 [[32minfo[39m]: MongoDB connected 
+2025-08-26 10:16:34 [[32minfo[39m]: Server listening on port 5000 
+2025-08-26 10:16:43 [[31merror[39m]: Cannot access 'user' before initialization 
+2025-08-26 10:20:29 [[32minfo[39m]: Shutting down... 
+2025-08-26 10:20:39 [[32minfo[39m]: MongoDB connected 
+2025-08-26 10:20:39 [[32minfo[39m]: Server listening on port 5000 
+2025-08-26 10:22:36 [[32minfo[39m]: Checking whether email is already in database 
+2025-08-26 10:24:58 [[32minfo[39m]: Shutting down... 
