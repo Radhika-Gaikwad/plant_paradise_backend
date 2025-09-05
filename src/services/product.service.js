@@ -4,7 +4,7 @@ import { CODES } from '../common/response-code.js';
 import { logger } from '../logger/logger.js'; // optional but matches your pattern
 import ProductModel from '../models/product.model.js';
 import CategoryModel from "../models/category.model.js";
-import SubCategoryModel from "../models/subCategory.model.js";
+import SubCategoryModel from "../models/subcategory.model.js";
 export default class ProductService {
   // CREATE
   static addProduct = async (payload) => {
