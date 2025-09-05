@@ -24,6 +24,20 @@ export default class ProductController {
     return res.status(result.code).json(result);
   };
 
+
+  static getProductsByCategory = async (req, res) => {
+    const { categoryId } = req.params;
+    const response = await ProductService.getProductsByCategory(categoryId);
+    res.status(response.code).json(response);
+  };
+
+  // New: get by subcategory
+  static getProductsBySubCategory = async (req, res) => {
+    const { subCategoryId } = req.params;
+    const response = await ProductService.getProductsBySubCategory(subCategoryId);
+    res.status(response.code).json(response);
+  };
+
   static deleteProduct = async (req, res) => {
     const { productId } = req.params;
     const result = await ProductService.deleteProduct(productId);

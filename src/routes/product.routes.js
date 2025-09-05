@@ -11,6 +11,8 @@ const router = express.Router();
 // Public reads
 router.get('/getAll', ProductController.getProducts);
 router.get('/:productId', ProductController.getProduct);
+router.get('/byCategory/:categoryId', ProductController.getProductsByCategory);
+router.get('/bySubCategory/:subCategoryId', ProductController.getProductsBySubCategory);
 
 // Admin-only writes
 router.post('/addProduct', requireRole('Admin'), ProductController.addProduct);

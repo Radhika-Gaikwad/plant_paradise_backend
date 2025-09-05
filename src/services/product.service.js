@@ -3,25 +3,38 @@ import { sendResponse } from '../common/common.js';
 import { CODES } from '../common/response-code.js';
 import { logger } from '../logger/logger.js'; // optional but matches your pattern
 import ProductModel from '../models/product.model.js';
-
+import CategoryModel from "../models/category.model.js";
+import SubCategoryModel from "../models/subCategory.model.js";
 export default class ProductService {
   // CREATE
   static addProduct = async (payload) => {
     try {
-      // minor normalization
       if (payload.productName) payload.productName = payload.productName.trim();
-      if (payload.category) payload.category = payload.category.trim();
-      if (payload.subCategory) payload.subCategory = payload.subCategory.trim();
 
-      const doc = await ProductModel.create(payload);
+      // fetch category name
+      const category = await CategoryModel.findOne({ categoryId: payload.categoryId }).lean();
+      if (!category) return sendResponse(CODES.BAD_REQUEST, 'Invalid categoryId');
+
+      // fetch subcategory name (optional)
+      let subCategoryName = '';
+      if (payload.subCategoryId) {
+        const subCategory = await SubCategoryModel.findOne({ subCategoryId: payload.subCategoryId }).lean();
+        if (!subCategory) return sendResponse(CODES.BAD_REQUEST, 'Invalid subCategoryId');
+        subCategoryName = subCategory.subCategoryName;
+      }
+
+      const doc = await ProductModel.create({
+        ...payload,
+        categoryName: category.categoryName,
+        subCategoryName,
+      });
+
       return sendResponse(CODES.CREATED, 'Product created successfully', { product: doc });
     } catch (err) {
       logger?.error?.(err);
-      // Duplicate key or validation errors
       return sendResponse(CODES.BAD_REQUEST, err.message || 'Failed to create product');
     }
   };
-
   // READ (LIST) — basic filters + pagination
   static getProducts = async (query) => {
     try {
@@ -140,4 +153,37 @@ export default class ProductService {
       return sendResponse(CODES.INTERNAL_SERVER_ERROR, 'Failed to delete product');
     }
   };
+
+
+
+  static getProductsByCategory = async (categoryId) => {
+    try {
+      const items = await ProductModel.find({ category: categoryId }).lean();
+      if (!items.length) {
+        return sendResponse(CODES.NOT_FOUND, 'No products found for this category');
+      }
+      return sendResponse(CODES.OK, 'Products fetched successfully', { items });
+    } catch (err) {
+      logger?.error?.(err);
+      return sendResponse(CODES.INTERNAL_SERVER_ERROR, 'Failed to fetch products by category');
+    }
+  };
+
+  // Get products by subCategoryId
+  static getProductsBySubCategory = async (subCategoryId) => {
+    try {
+      const items = await ProductModel.find({ subCategory: subCategoryId }).lean();
+      if (!items.length) {
+        return sendResponse(CODES.NOT_FOUND, 'No products found for this subcategory');
+      }
+      return sendResponse(CODES.OK, 'Products fetched successfully', { items });
+    } catch (err) {
+      logger?.error?.(err);
+      return sendResponse(CODES.INTERNAL_SERVER_ERROR, 'Failed to fetch products by subcategory');
+    }
+  };
 }
+
+
+// Get products by categoryId
+

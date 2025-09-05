@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
-
 const productSchema = new mongoose.Schema(
   {
     productId: {
@@ -14,72 +13,46 @@ const productSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
-    category: {
+
+    // store categoryId & name separately
+    categoryId: {
       type: String,
       required: true,
       trim: true,
     },
-    subCategory: {
+    categoryName: {
       type: String,
       trim: true,
     },
-    quantity: {
-      type: Number,
-      default: 0,
-    },
-    stock: {
-      type: Boolean,
-      default: true,
-    },
-    subscription: {
-      type: Boolean,
-      default: true,
-    },
-    review: {
-      type: [String], // Array of review IDs or texts
-      default: [],
-    },
-    unit: {
+
+    // store subCategoryId & name separately
+    subCategoryId: {
       type: String,
       trim: true,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
-    discount: {
-      type: Number,
-      default: 0,
-    },
-    imageUrl: {
-      type: [String], // Array of image URLs
-      default: [],
-    },
-    video: {
-      type: [String], // Array of video URLs
-      default: [],
-    },
-    description: {
+    subCategoryName: {
       type: String,
       trim: true,
     },
-    overAllRating: {
-      type: Number,
-      min: 0,
-      max: 5,
-      default: 5,
-    },
-    createdOn: {
-      type: Date,
-      default: Date.now,
-    },
+
+    quantity: { type: Number, default: 0 },
+    stock: { type: Boolean, default: true },
+    subscription: { type: Boolean, default: true },
+    review: { type: [String], default: [] },
+    unit: { type: String, trim: true },
+    price: { type: Number, required: true },
+    discount: { type: Number, default: 0 },
+    imageUrl: { type: [String], default: [] },
+    video: { type: [String], default: [] },
+    description: { type: String, trim: true },
+    overAllRating: { type: Number, min: 0, max: 5, default: 5 },
+    createdOn: { type: Date, default: Date.now },
   },
   {
-    collection: 'plant_product', // Collection name
-    versionKey: false,           // Removes __v field
+    collection: 'plant_product',
+    versionKey: false,
   }
 );
 
 const ProductModel = mongoose.model('PlantProduct', productSchema);
-
 export default ProductModel;

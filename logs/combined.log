@@ -156,3 +156,17 @@
 2025-08-26 10:20:39 [[32minfo[39m]: Server listening on port 5000 
 2025-08-26 10:22:36 [[32minfo[39m]: Checking whether email is already in database 
 2025-08-26 10:24:58 [[32minfo[39m]: Shutting down... 
+2025-08-31 19:25:21 [[32minfo[39m]: MongoDB connected 
+2025-08-31 19:25:21 [[32minfo[39m]: Server listening on port 5000 
+2025-09-02 22:33:51 [[32minfo[39m]: MongoDB connected 
+2025-09-02 22:33:51 [[32minfo[39m]: Server listening on port 5000 
+2025-09-02 22:54:48 [[32minfo[39m]: Shutting down... 
+2025-09-02 22:56:01 [[32minfo[39m]: MongoDB connected 
+2025-09-02 22:56:01 [[32minfo[39m]: Server listening on port 5000 
+2025-09-03 23:33:02 [[32minfo[39m]: MongoDB connected 
+2025-09-03 23:33:02 [[32minfo[39m]: Server listening on port 5000 
+2025-09-03 23:50:14 [[31merror[39m]: CategoryModel is not defined 
+2025-09-03 23:52:33 [[32minfo[39m]: Shutting down... 
+2025-09-05 22:35:45 [[32minfo[39m]: MongoDB connected 
+2025-09-05 22:35:45 [[32minfo[39m]: Server listening on port 5000 
+2025-09-05 22:50:02 [[32minfo[39m]: Shutting down... 
