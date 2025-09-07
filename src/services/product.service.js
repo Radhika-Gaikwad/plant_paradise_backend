@@ -156,9 +156,10 @@ export default class ProductService {
 
 
 
+  // Get products by categoryId
   static getProductsByCategory = async (categoryId) => {
     try {
-      const items = await ProductModel.find({ category: categoryId }).lean();
+      const items = await ProductModel.find({ categoryId }).lean();  // fixed field name
       if (!items.length) {
         return sendResponse(CODES.NOT_FOUND, 'No products found for this category');
       }
@@ -172,7 +173,7 @@ export default class ProductService {
   // Get products by subCategoryId
   static getProductsBySubCategory = async (subCategoryId) => {
     try {
-      const items = await ProductModel.find({ subCategory: subCategoryId }).lean();
+      const items = await ProductModel.find({ subCategoryId }).lean();  // fixed field name
       if (!items.length) {
         return sendResponse(CODES.NOT_FOUND, 'No products found for this subcategory');
       }
@@ -182,6 +183,7 @@ export default class ProductService {
       return sendResponse(CODES.INTERNAL_SERVER_ERROR, 'Failed to fetch products by subcategory');
     }
   };
+
 }
 
 
