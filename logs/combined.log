@@ -194,3 +194,6 @@
 2025-09-10 17:59:24 [[32minfo[39m]: Server listening on port 5000 
 2025-09-10 17:59:29 [[32minfo[39m]: Checking whether email is already in database 
 2025-09-10 18:07:42 [[32minfo[39m]: Shutting down... 
+2025-09-10 18:08:08 [[32minfo[39m]: MongoDB connected 
+2025-09-10 18:08:09 [[32minfo[39m]: Server listening on port 5000 
+2025-09-10 18:22:37 [[32minfo[39m]: Shutting down... 
