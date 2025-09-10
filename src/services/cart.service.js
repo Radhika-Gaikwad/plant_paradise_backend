@@ -75,7 +75,8 @@ export default class CartService {
     }
   }
 
- async getCart(userPayload) {
+// ✅ Get Cart with Full Product Details
+async getCart(userPayload) {
   try {
     const user = await User.findOne({ email: userPayload.email });
     if (!user) return sendResponse(CODES.NOT_FOUND, "User not found");
@@ -83,12 +84,25 @@ export default class CartService {
     const cartWithDetails = await Promise.all(
       user.cart.map(async (item) => {
         const product = await Product.findOne({ productId: item.productId });
+
         return {
           productId: item.productId,
           quantity: item.quantity,
           productName: product?.productName || null,
           price: product?.price || null,
-          imageUrl: product?.imageUrl || null,
+          discount: product?.discount || 0,
+          finalPrice: product
+            ? product.price - (product.price * (product.discount || 0)) / 100
+            : null,
+          categoryId: product?.categoryId || null,
+          categoryName: product?.categoryName || null,
+          subCategoryId: product?.subCategoryId || null,
+          subCategoryName: product?.subCategoryName || null,
+          stock: product?.stock || false,
+          unit: product?.unit || null,
+          imageUrl: product?.imageUrl?.length ? product.imageUrl[0] : null, // first image
+          description: product?.description || null,
+          overAllRating: product?.overAllRating || 0,
         };
       })
     );
@@ -99,5 +113,6 @@ export default class CartService {
     return sendResponse(CODES.INTERNAL_SERVER_ERROR, "Error fetching cart");
   }
 }
+
 
 }
