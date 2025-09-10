@@ -20,8 +20,8 @@ app.use(cors({ origin: true, credentials: true }));
 // rate limiter
 app.use(
   rateLimit({
-    windowMs: 15 * 60 * 1000,
-    max: 100,
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 1000, // allow more requests
   })
 );
 
