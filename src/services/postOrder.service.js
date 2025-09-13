@@ -1,7 +1,7 @@
 // services/postOrder.service.js
-import  OrderModel  from "../models/order.model.js"; // dynamoose
+import OrderModel from "../models/order.model.js"; // mongoose
 import ProductModel from "../models/product.model.js"; // mongoose
-import userModel  from "../models/user.model.js"; // if exists
+import userModel from "../models/user.model.js"; // mongoose
 // import { NotificationModel } from "../models/notification.model.js"; // if used
 import { verifyMockSignature } from "../utils/mockPayment.js";
 import { v4 as uuidv4 } from "uuid";
@@ -140,7 +140,7 @@ export default class PostOrderService {
         totalPrice = Number(totalPrice.toFixed(2));
       }
 
-      // build order object for dynamoose order model
+      // build order object for MongoDB (Mongoose)
       const orderPayload = {
         userEmail: user.email,
         userName: user.username || user.name || "",
@@ -171,16 +171,20 @@ export default class PostOrderService {
         orderPayload.paymentHistory = [];
       }
 
-      // create order in DynamoDB (dynamoose)
+      // create order in MongoDB (Mongoose)
       const createdOrder = await this.orderModel.create(orderPayload);
 
-      // remove ordered items from user's cart (if using userModel)
+      // remove ordered items from user's cart (Mongoose version)
       try {
         if (userModel) {
-          const userRecord = await userModel.get({ email: user.email });
+          const userRecord = await userModel.findOne({ email: user.email }).exec();
           if (userRecord && Array.isArray(userRecord.cart)) {
             const updatedCart = userRecord.cart.filter(ci => !products.some(pi => pi.productId === ci.productId));
-            await userModel.update({ email: user.email }, { cart: updatedCart });
+            // persist the updated cart
+            userRecord.cart = updatedCart;
+            await userRecord.save();
+            // alternatively you could use:
+            // await userModel.updateOne({ email: user.email }, { cart: updatedCart });
           }
         }
       } catch (e) {
@@ -190,7 +194,7 @@ export default class PostOrderService {
 
       // optional: create notification for admin
       try {
-        const adminUsers = (await userModel.scan("role").eq("Admin").exec()) || [];
+        const adminUsers = (await userModel.find({ role: "Admin" }).exec()) || [];
         const admin = adminUsers[0];
         if (admin) {
           const notificationTitle = `🛒 New Order ${createdOrder.orderId}`;
