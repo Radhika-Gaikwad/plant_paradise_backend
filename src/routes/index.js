@@ -7,6 +7,7 @@ import cartRoutes from './cart.routes.js';       // 👈 import cart routes
 import wishlistRoutes from './wishlist.routes.js'; // 👈 import wishlist routes
 import paymentRoutes from "./payment.routes.js";
 import orderRoutes from "./order.routes.js";
+import blogRoutes from "./blog.routes.js";
 const router = express.Router();
 
 // all routes here
@@ -17,7 +18,8 @@ router.use('/subcategory', subCategoryRoutes);
 router.use('/cart', cartRoutes);                 // 👈 register cart routes
 router.use('/wishlist', wishlistRoutes); 
 router.use("/payments", paymentRoutes);
-router.use("/orders", orderRoutes);        // 👈 register wishlist routes
+router.use("/orders", orderRoutes);   
+router.use("/blogs", blogRoutes);       // 👈 register blog routes
 
 export default router;
 

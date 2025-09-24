@@ -4,7 +4,6 @@ import OrderModel from "../models/order.model.js";
 export default class OrderService {
   // ================= USER SERVICES =================
 
-  // 1. Get orders by user
   async getOrdersByUser(email) {
     try {
       const orders = await OrderModel.find({ userEmail: email }).sort({ createdOn: -1 });
@@ -14,14 +13,14 @@ export default class OrderService {
     }
   }
 
-  // 2. Get order by ID (check if user is allowed)
   async getOrderById(orderId, user) {
     try {
       const order = await OrderModel.findOne({ orderId });
-      if (!order) return null;
+      if (!order) return null; // not found
 
+      // Rule: Admin can see all, user can see only their own
       if (user.role !== "Admin" && order.userEmail !== user.email) {
-        throw new Error("Unauthorized access");
+        throw new Error("Unauthorized");
       }
 
       return order;
@@ -30,19 +29,19 @@ export default class OrderService {
     }
   }
 
+
+
+  // 3. Cancel order
   async cancelOrder(orderId, user) {
     try {
       const order = await OrderModel.findOne({ orderId });
       if (!order) return null;
 
-      // Ensure only order owner can cancel
       if (order.userEmail !== user.email) {
-        throw new Error("Unauthorized");
+        return { unauthorized: true };
       }
 
-      // Allowed statuses for cancellation
       const cancellableStatuses = ["PLACED", "CONFIRMED", "SHIPPED"];
-
       if (!cancellableStatuses.includes(order.status)) {
         throw new Error(`Order cannot be cancelled in current status: ${order.status}`);
       }

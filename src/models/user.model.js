@@ -17,7 +17,9 @@ const addressSchema = new mongoose.Schema({
   streetName: { type: String },
   city: { type: String },
   district: { type: String },
+  state: { type: String },
   pincode: { type: String },
+  
   addressType: {
     type: String,
     enum: ["home", "office"],

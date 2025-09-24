@@ -6,58 +6,64 @@ import OrderModel from "../models/order.model.js";
 import OrderService from "../services/order.service.js";
 
 const orderService = new OrderService();
-
 const postOrderService = new PostOrderService(OrderModel, ProductModel);
 
+// ----------------- ADD ORDER -----------------
 export const addOrderController = async (req, res) => {
   try {
-    // Accept either full order body in req.body
     const body = req.body;
-
-    // Example keys expected in body:
-    // user, products, address, paymentMode, subscriptionMode, paymentPayload, paymentSignature, deliveryFrom, deliveryTo
     const response = await postOrderService.addOrder(body);
-
     return res.status(response.status).json(response);
   } catch (err) {
     console.error("addOrderController error", err);
     return res.status(500).json({ success: false, message: "Server error" });
   }
-
-
-
-  
 };
 
-
+// ----------------- GET USER ORDERS -----------------
 export const getOrdersByUser = async (req, res) => {
   try {
     const data = await orderService.getOrdersByUser(req.user.email);
-    res.status(200).json(data);
+    return res.status(200).json(data);
   } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+export const getOrderById = async (req, res) => {
+  try {
+    const order = await orderService.getOrderById(req.params.id, req.user);
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    res.status(200).json({ success: true, order });
+  } catch (err) {
+    if (err.message.includes("Unauthorized")) {
+      return res.status(403).json({ success: false, message: "Unauthorized access" });
+    }
     res.status(500).json({ success: false, message: err.message });
   }
 };
 
-// 2. Get single order by ID (for user/admin)
-export const getOrderById = async (req, res) => {
-  try {
-    const order = await orderService.getOrderById(req.params.id, req.user);
-    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
-    res.status(200).json({ success: true, order });
-  } catch (err) {
-    res.status(403).json({ success: false, message: err.message });
-  }
-};
 
-// 3. Cancel order (user side)
+// ----------------- CANCEL ORDER -----------------
 export const cancelOrder = async (req, res) => {
   try {
     const order = await orderService.cancelOrder(req.params.id, req.user);
-    if (!order) return res.status(404).json({ success: false, message: "Order not found" });
-    res.status(200).json({ success: true, message: "Order cancelled successfully", order });
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    if (order.unauthorized) {
+      return res.status(403).json({ success: false, message: "Unauthorized to cancel this order" });
+    }
+
+    return res.status(200).json({ success: true, message: "Order cancelled successfully", order });
   } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
+    return res.status(400).json({ success: false, message: err.message });
   }
 };
 
